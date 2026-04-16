@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Advanced Rock Paper Scissors</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 50px;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    body.light {
+      background: #f4f4f4;
+      color: #333;
+    }
+
+    body.dark {
+      background: #1e1e1e;
+      color: #fff;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+    }
+
+    .choices button {
+      font-size: 18px;
+      padding: 12px 25px;
+      margin: 10px;
+      cursor: pointer;
+      border: none;
+      border-radius: 8px;
+      background-color: #007BFF;
+      color: white;
+      transition: transform 0.2s, background 0.3s;
+    }
+
+    .choices button:hover {
+      transform: scale(1.1);
+      background-color: #0056b3;
+    }
+
+    .result {
+      margin-top: 25px;
+      font-size: 20px;
+      font-weight: bold;
+      min-height: 40px;
+      opacity: 0;
+      transition: opacity 0.5s ease-in;
+    }
+
+    .result.show {
+      opacity: 1;
+    }
+
+    .score {
+      margin-top: 15px;
+      font-size: 18px;
+    }
+
+    .controls {
+      margin-top: 20px;
+    }
+
+    .controls button {
+      padding: 8px 15px;
+      margin: 5px;
+      cursor: pointer;
+      border-radius: 5px;
+      border: none;
+    }
+
+    .winner {
+      font-size: 24px;
+      margin-top: 20px;
+      color: green;
+    }
+  </style>
+</head>
+<body class="light">
+
+  <h1>🎮 Rock Paper Scissors</h1>
+
+  <div class="choices">
+    <button onclick="playGame('rock')">🪨 Rock</button>
+    <button onclick="playGame('paper')">📄 Paper</button>
+    <button onclick="playGame('scissors')">✂️ Scissors</button>
+  </div>
+
+  <div id="result" class="result">Make your move!</div>
+  <div id="score" class="score"></div>
+  <div id="winner" class="winner"></div>
+
+  <div class="controls">
+    <button onclick="toggleTheme()">🌙 Toggle Dark Mode</button>
+    <button onclick="resetGame()">🔄 Reset Game</button>
+  </div>
+
+  <!-- Sound Effects -->
+  <audio id="winSound" src="https://www.soundjay.com/button/sounds/button-4.mp3"></audio>
+  <audio id="loseSound" src="https://www.soundjay.com/button/sounds/button-10.mp3"></audio>
+  <audio id="clickSound" src="https://www.soundjay.com/button/sounds/button-16.mp3"></audio>
+
+  <script>
+    let playerScore = localStorage.getItem("playerScore") ? parseInt(localStorage.getItem("playerScore")) : 0;
+    let computerScore = localStorage.getItem("computerScore") ? parseInt(localStorage.getItem("computerScore")) : 0;
+    const WIN_LIMIT = 5;
+
+    updateScore();
+
+    function getComputerChoice() {
+      const choices = ['rock', 'paper', 'scissors'];
+      return choices[Math.floor(Math.random() * 3)];
+    }
+
+    function playGame(playerChoice) {
+      document.getElementById("clickSound").play();
+
+      if (playerScore >= WIN_LIMIT || computerScore >= WIN_LIMIT) return;
+
+      const computerChoice = getComputerChoice();
+      let resultText = "";
+
+      if (playerChoice === computerChoice) {
+        resultText = "It's a tie!";
+      } else if (
+        (playerChoice === 'rock' && computerChoice === 'scissors') ||
+        (playerChoice === 'paper' && computerChoice === 'rock') ||
+        (playerChoice === 'scissors' && computerChoice === 'paper')
+      ) {
+        resultText = "You win this round!";
+        playerScore++;
+        document.getElementById("winSound").play();
+      } else {
+        resultText = "You lose this round!";
+        computerScore++;
+        document.getElementById("loseSound").play();
+      }
+
+      localStorage.setItem("playerScore", playerScore);
+      localStorage.setItem("computerScore", computerScore);
+
+      const resultDiv = document.getElementById("result");
+      resultDiv.classList.remove("show");
+
+      setTimeout(() => {
+        resultDiv.innerText =
+          `You chose ${playerChoice}, Computer chose ${computerChoice}. ${resultText}`;
+        resultDiv.classList.add("show");
+      }, 100);
+
+      updateScore();
+      checkWinner();
+    }
+
+    function updateScore() {
+      document.getElementById("score").innerText =
+        `Player: ${playerScore} | Computer: ${computerScore}`;
+    }
+
+    function checkWinner() {
+      if (playerScore === WIN_LIMIT) {
+        document.getElementById("winner").innerText = "🏆 You Won the Game!";
+      } else if (computerScore === WIN_LIMIT) {
+        document.getElementById("winner").innerText = "💻 Computer Won the Game!";
+      }
+    }
+
+    function resetGame() {
+      playerScore = 0;
+      computerScore = 0;
+      localStorage.clear();
+      document.getElementById("winner").innerText = "";
+      document.getElementById("result").innerText = "Make your move!";
+      updateScore();
+    }
+
+    function toggleTheme() {
+      document.body.classList.toggle("dark");
+      document.body.classList.toggle("light");
+    }
+  </script>
+
+</body>
+</html>
