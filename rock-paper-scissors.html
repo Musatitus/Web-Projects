@@ -1,188 +1,332 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Advanced Rock Paper Scissors</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>RPS Arena AI+</title>
 
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      margin-top: 50px;
-      transition: background 0.3s, color 0.3s;
-    }
+<style>
+:root {
+  --bg:#0f172a;
+  --card:rgba(255,255,255,0.08);
+  --text:#fff;
+  --accent:#38bdf8;
+  --win:#22c55e;
+  --lose:#ef4444;
+  --draw:#facc15;
+}
 
-    body.light {
-      background: #f4f4f4;
-      color: #333;
-    }
+body.light {
+  --bg:#f1f5f9;
+  --card:#ffffff;
+  --text:#0f172a;
+  --accent:#2563eb;
+}
 
-    body.dark {
-      background: #1e1e1e;
-      color: #fff;
-    }
+body {
+  margin:0;
+  font-family:system-ui;
+  background:var(--bg);
+  color:var(--text);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+  transition:0.3s;
+}
 
-    h1 {
-      margin-bottom: 20px;
-    }
+.card {
+  width:420px;
+  background:var(--card);
+  padding:20px;
+  border-radius:18px;
+  backdrop-filter:blur(10px);
+  text-align:center;
+  box-shadow:0 20px 60px rgba(0,0,0,0.3);
+}
 
-    .choices button {
-      font-size: 18px;
-      padding: 12px 25px;
-      margin: 10px;
-      cursor: pointer;
-      border: none;
-      border-radius: 8px;
-      background-color: #007BFF;
-      color: white;
-      transition: transform 0.2s, background 0.3s;
-    }
+/* SPRITES */
+.arena {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin:20px 0;
+  height:120px;
+}
 
-    .choices button:hover {
-      transform: scale(1.1);
-      background-color: #0056b3;
-    }
+.sprite {
+  font-size:60px;
+  transition:0.3s;
+}
 
-    .result {
-      margin-top: 25px;
-      font-size: 20px;
-      font-weight: bold;
-      min-height: 40px;
-      opacity: 0;
-      transition: opacity 0.5s ease-in;
-    }
+.fight-left {
+  animation:leftFight 0.4s ease;
+}
 
-    .result.show {
-      opacity: 1;
-    }
+.fight-right {
+  animation:rightFight 0.4s ease;
+}
 
-    .score {
-      margin-top: 15px;
-      font-size: 18px;
-    }
+@keyframes leftFight {
+  0% {transform:translateX(0);}
+  50% {transform:translateX(40px) rotate(10deg);}
+  100% {transform:translateX(0);}
+}
 
-    .controls {
-      margin-top: 20px;
-    }
+@keyframes rightFight {
+  0% {transform:translateX(0);}
+  50% {transform:translateX(-40px) rotate(-10deg);}
+  100% {transform:translateX(0);}
+}
 
-    .controls button {
-      padding: 8px 15px;
-      margin: 5px;
-      cursor: pointer;
-      border-radius: 5px;
-      border: none;
-    }
+.buttons {
+  display:flex;
+  justify-content:space-around;
+}
 
-    .winner {
-      font-size: 24px;
-      margin-top: 20px;
-      color: green;
-    }
-  </style>
+button {
+  padding:10px;
+  border:none;
+  border-radius:10px;
+  cursor:pointer;
+  background:var(--accent);
+  color:white;
+  width:90px;
+  transition:0.2s;
+}
+
+button:hover {
+  transform:scale(1.1);
+}
+
+.result {
+  min-height:40px;
+  margin-top:10px;
+}
+
+.stats {
+  margin-top:15px;
+  text-align:left;
+}
+
+.bar {
+  height:10px;
+  background:#334155;
+  border-radius:10px;
+  overflow:hidden;
+  margin-bottom:8px;
+}
+
+.fill {
+  height:100%;
+  transition:0.4s;
+}
+
+.winFill {background:var(--win);}
+.loseFill {background:var(--lose);}
+.drawFill {background:var(--draw);}
+
+.small {
+  font-size:12px;
+  opacity:0.8;
+}
+
+.aiThinking {
+  font-size:12px;
+  opacity:0.7;
+}
+</style>
 </head>
-<body class="light">
 
-  <h1>🎮 Rock Paper Scissors</h1>
+<body class="dark">
 
-  <div class="choices">
-    <button onclick="playGame('rock')">🪨 Rock</button>
-    <button onclick="playGame('paper')">📄 Paper</button>
-    <button onclick="playGame('scissors')">✂️ Scissors</button>
+<div class="card">
+  <h2>⚔️ RPS Arena AI+</h2>
+
+  <div class="arena">
+    <div id="playerSprite" class="sprite">🧍</div>
+    <div id="aiSprite" class="sprite">🤖</div>
   </div>
 
-  <div id="result" class="result">Make your move!</div>
-  <div id="score" class="score"></div>
-  <div id="winner" class="winner"></div>
-
-  <div class="controls">
-    <button onclick="toggleTheme()">🌙 Toggle Dark Mode</button>
-    <button onclick="resetGame()">🔄 Reset Game</button>
+  <div class="buttons">
+    <button onclick="play('rock')">🪨</button>
+    <button onclick="play('paper')">📄</button>
+    <button onclick="play('scissors')">✂️</button>
   </div>
 
-  <!-- Sound Effects -->
-  <audio id="winSound" src="https://www.soundjay.com/button/sounds/button-4.mp3"></audio>
-  <audio id="loseSound" src="https://www.soundjay.com/button/sounds/button-10.mp3"></audio>
-  <audio id="clickSound" src="https://www.soundjay.com/button/sounds/button-16.mp3"></audio>
+  <div id="result" class="result">Choose your move</div>
+  <div id="aiThinking" class="aiThinking"></div>
 
-  <script>
-    let playerScore = localStorage.getItem("playerScore") ? parseInt(localStorage.getItem("playerScore")) : 0;
-    let computerScore = localStorage.getItem("computerScore") ? parseInt(localStorage.getItem("computerScore")) : 0;
-    const WIN_LIMIT = 5;
+  <div class="stats">
+    <div>Win Rate</div>
+    <div class="bar"><div id="winBar" class="fill winFill"></div></div>
 
-    updateScore();
+    <div>Lose Rate</div>
+    <div class="bar"><div id="loseBar" class="fill loseFill"></div></div>
 
-    function getComputerChoice() {
-      const choices = ['rock', 'paper', 'scissors'];
-      return choices[Math.floor(Math.random() * 3)];
-    }
+    <div>Draw Rate</div>
+    <div class="bar"><div id="drawBar" class="fill drawFill"></div></div>
+  </div>
 
-    function playGame(playerChoice) {
-      document.getElementById("clickSound").play();
+  <div class="small" id="score"></div>
 
-      if (playerScore >= WIN_LIMIT || computerScore >= WIN_LIMIT) return;
+  <br/>
+  <button onclick="toggleTheme()">Theme</button>
+  <button onclick="reset()">Reset</button>
+</div>
 
-      const computerChoice = getComputerChoice();
-      let resultText = "";
+<script>
+/* ================= SOUND ENGINE ================= */
+class SoundEngine {
+  constructor() {
+    this.sounds = {};
+    this.volume = 0.5;
+  }
 
-      if (playerChoice === computerChoice) {
-        resultText = "It's a tie!";
-      } else if (
-        (playerChoice === 'rock' && computerChoice === 'scissors') ||
-        (playerChoice === 'paper' && computerChoice === 'rock') ||
-        (playerChoice === 'scissors' && computerChoice === 'paper')
-      ) {
-        resultText = "You win this round!";
-        playerScore++;
-        document.getElementById("winSound").play();
-      } else {
-        resultText = "You lose this round!";
-        computerScore++;
-        document.getElementById("loseSound").play();
-      }
+  load(name, src) {
+    const audio = new Audio(src);
+    audio.preload = "auto";
+    this.sounds[name] = audio;
+  }
 
-      localStorage.setItem("playerScore", playerScore);
-      localStorage.setItem("computerScore", computerScore);
+  play(name) {
+    const sound = this.sounds[name];
+    if (!sound) return;
 
-      const resultDiv = document.getElementById("result");
-      resultDiv.classList.remove("show");
+    const clone = sound.cloneNode();
+    clone.volume = this.volume;
+    clone.play().catch(()=>{});
+  }
 
-      setTimeout(() => {
-        resultDiv.innerText =
-          `You chose ${playerChoice}, Computer chose ${computerChoice}. ${resultText}`;
-        resultDiv.classList.add("show");
-      }, 100);
+  setVolume(v) {
+    this.volume = v;
+  }
+}
 
-      updateScore();
-      checkWinner();
-    }
+const SFX = new SoundEngine();
 
-    function updateScore() {
-      document.getElementById("score").innerText =
-        `Player: ${playerScore} | Computer: ${computerScore}`;
-    }
+SFX.load("click","https://www.soundjay.com/button/sounds/button-16.mp3");
+SFX.load("win","https://www.soundjay.com/button/sounds/button-4.mp3");
+SFX.load("lose","https://www.soundjay.com/button/sounds/button-10.mp3");
+SFX.load("draw","https://www.soundjay.com/button/sounds/button-09.mp3");
+SFX.load("ai","https://www.soundjay.com/button/sounds/button-21.mp3");
 
-    function checkWinner() {
-      if (playerScore === WIN_LIMIT) {
-        document.getElementById("winner").innerText = "🏆 You Won the Game!";
-      } else if (computerScore === WIN_LIMIT) {
-        document.getElementById("winner").innerText = "💻 Computer Won the Game!";
-      }
-    }
+/* ================= GAME STATE ================= */
+let stats = {win:0, lose:0, draw:0, total:0};
+let memory = {rock:0, paper:0, scissors:0};
 
-    function resetGame() {
-      playerScore = 0;
-      computerScore = 0;
-      localStorage.clear();
-      document.getElementById("winner").innerText = "";
-      document.getElementById("result").innerText = "Make your move!";
-      updateScore();
-    }
+/* ================= AI ================= */
+function aiPredict() {
+  let max = "rock";
+  for (let k in memory) {
+    if (memory[k] > memory[max]) max = k;
+  }
 
-    function toggleTheme() {
-      document.body.classList.toggle("dark");
-      document.body.classList.toggle("light");
-    }
-  </script>
+  if (max === "rock") return "paper";
+  if (max === "paper") return "scissors";
+  return "rock";
+}
+
+function computerMove() {
+  SFX.play("ai");
+  document.getElementById("aiThinking").innerText = "AI thinking...";
+
+  return new Promise(resolve => {
+    setTimeout(() => resolve(aiPredict()), 600);
+  });
+}
+
+/* ================= GAME ================= */
+async function play(player) {
+
+  SFX.play("click");
+  memory[player]++;
+
+  let ai = await computerMove();
+
+  animate(player, ai);
+
+  let result = "";
+
+  if (player === ai) {
+    stats.draw++;
+    result = "Draw!";
+    SFX.play("draw");
+  }
+  else if (
+    (player==="rock"&&ai==="scissors") ||
+    (player==="paper"&&ai==="rock") ||
+    (player==="scissors"&&ai==="paper")
+  ) {
+    stats.win++;
+    result = "You Win!";
+    SFX.play("win");
+  } else {
+    stats.lose++;
+    result = "You Lose!";
+    SFX.play("lose");
+  }
+
+  stats.total++;
+
+  document.getElementById("result").innerText =
+    `You: ${player} | AI: ${ai} → ${result}`;
+
+  document.getElementById("aiThinking").innerText = "";
+
+  updateStats();
+}
+
+/* ================= ANIMATION ================= */
+function animate(p, ai) {
+  const ps = document.getElementById("playerSprite");
+  const as = document.getElementById("aiSprite");
+
+  ps.className = "sprite fight-left";
+  as.className = "sprite fight-right";
+
+  ps.innerText = icon(p);
+  as.innerText = icon(ai);
+
+  setTimeout(()=>{
+    ps.className="sprite";
+    as.className="sprite";
+  },400);
+}
+
+function icon(x){
+  return x==="rock"?"🪨":x==="paper"?"📄":"✂️";
+}
+
+/* ================= STATS ================= */
+function updateStats() {
+  let w = (stats.win/stats.total)*100||0;
+  let l = (stats.lose/stats.total)*100||0;
+  let d = (stats.draw/stats.total)*100||0;
+
+  document.getElementById("winBar").style.width = w+"%";
+  document.getElementById("loseBar").style.width = l+"%";
+  document.getElementById("drawBar").style.width = d+"%";
+
+  document.getElementById("score").innerText =
+    `Wins:${stats.win} Losses:${stats.lose} Draws:${stats.draw}`;
+}
+
+/* ================= CONTROLS ================= */
+function reset(){
+  stats = {win:0, lose:0, draw:0, total:0};
+  memory = {rock:0,paper:0,scissors:0};
+  updateStats();
+  document.getElementById("result").innerText="Reset done";
+}
+
+function toggleTheme(){
+  document.body.classList.toggle("light");
+  document.body.classList.toggle("dark");
+}
+
+updateStats();
+</script>
 
 </body>
 </html>
