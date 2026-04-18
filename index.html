@@ -21,11 +21,9 @@
 
     .layout {
         display: flex;
-        flex-direction: row;
         min-height: 100vh;
     }
 
-    /* MAIN CONTENT */
     .container {
         flex: 1;
         padding: 20px 40px;
@@ -48,14 +46,7 @@
         padding-bottom: 5px;
     }
 
-    .skill {
-        margin: 15px 0;
-    }
-
-    .skill-name {
-        margin-bottom: 5px;
-    }
-
+    .skill { margin: 15px 0; }
     .bar {
         width: 100%;
         height: 10px;
@@ -64,10 +55,7 @@
         overflow: hidden;
     }
 
-    .fill {
-        height: 100%;
-        background: palegreen;
-    }
+    .fill { height: 100%; background: palegreen; }
 
     .html { width: 100%; }
     .css { width: 100%; }
@@ -75,10 +63,7 @@
     .php { width: 70%; }
     .js { width: 70%; }
 
-    /* HEADER */
-    .header {
-        text-align: center;
-    }
+    .header { text-align: center; }
 
     .profile-img {
         width: 340px;
@@ -88,10 +73,7 @@
         border: 3px solid palegreen;
     }
 
-    h1 {
-        margin-top: 20px;
-        font-size: 2.5em;
-    }
+    h1 { margin-top: 20px; font-size: 2.5em; }
 
     .bio {
         max-width: 600px;
@@ -99,9 +81,7 @@
         color: #cbd5f5;
     }
 
-    section {
-        margin-top: 50px;
-    }
+    section { margin-top: 50px; }
 
     h2 {
         border-bottom: 2px solid palegreen;
@@ -121,7 +101,6 @@
         text-decoration: none;
     }
 
-    /* CONTACT FORM */
     .contact-form {
         background: #556b2f;
         padding: 20px;
@@ -143,13 +122,12 @@
         color: black;
         padding: 10px;
         border: none;
-        cursor: pointer;
         width: 100%;
         font-weight: bold;
         border-radius: 5px;
+        cursor: pointer;
     }
 
-    /* POPUP (NOW ABOVE FORM) */
     #popup {
         display: none;
         position: absolute;
@@ -161,8 +139,6 @@
         padding: 10px 15px;
         border-radius: 8px;
         font-weight: bold;
-        z-index: 10;
-        white-space: nowrap;
     }
 
     footer {
@@ -173,16 +149,12 @@
     }
 
     @media (max-width: 900px) {
-        .layout {
-            flex-direction: column;
-        }
-
+        .layout { flex-direction: column; }
         .sidebar {
             width: 100%;
             height: auto;
             position: relative;
         }
-
         .profile-img {
             width: 90%;
             height: auto;
@@ -195,14 +167,15 @@
 
 <div class="layout">
 
-<!-- MAIN CONTENT -->
 <div class="container">
 
     <div class="header">
         <img src="Picture.png" class="profile-img">
         <h1>MUSA TITUS</h1>
         <p class="bio">
-            Information Systems graduate passionate about building clean, scalable, and efficient systems.
+            Rhodes University graduate, majored in Information Systems. Passionate about coding, 
+            web development, and building clean, efficient, and user-friendly systems. 
+            I enjoy solving problems through technology and continuously improving my technical skills.
         </p>
     </div>
 
@@ -211,22 +184,55 @@
 
         <div class="project">
             <h3>NovaTech Website</h3>
-            <p>Modern responsive landing page.</p>
+            <p>
+                Modern, responsive business landing page for a fictional tech company (NovaTech) <br>
+                using HTML, CSS, and JavaScript.
+            </p>
+            <a href="NovaTech-home.html">View Project</a>
         </div>
 
         <div class="project">
-            <h3>Rock Paper Scissors</h3>
-            <p>JavaScript interactive game.</p>
+            <h3>Rock Paper Scissors Game</h3>
+            <p>
+                Interactive browser-based game built using JavaScript, HTML, and CSS. 
+                Features dynamic UI updates and real-time user interaction.
+            </p>
+            <a href="rock-paper-scissors.html">View Project</a>
         </div>
+
+        <div class="project">
+            <h3>Makhanda SPCA Management System</h3>
+            <p>
+                Web-based system developed using PHP and MySQL with full CRUD functionality. 
+                Designed to support organisational operations and data management.
+            </p>
+            <a href="#">View Project</a>
+        </div>
+
+        <div class="project">
+            <h3>Web-Based Calculator</h3>
+            <p>
+                Responsive calculator application with structured logic and input validation, 
+                ensuring accurate calculations and a smooth user experience.
+            </p>
+            <a href="calculator.html">View Project</a>
+        </div>
+
+        <div class="project">
+            <h3>Contact Book System</h3>
+            <p>
+                A contact management system allowing users to add, edit, and delete contacts, 
+                demonstrating CRUD operations and data handling.
+            </p>
+            <a href="contact-book.html">View Project</a>
+        </div>
+
     </section>
 
-    <!-- CONTACT -->
     <section>
         <h2>Contact Me</h2>
 
         <div class="contact-form">
-
-            <!-- POPUP (INSIDE FORM AREA) -->
             <div id="popup">Message sent successfully ✔</div>
 
             <form onsubmit="sendEmail(event)">
@@ -250,15 +256,14 @@
 
 </div>
 
-<!-- SIDEBAR -->
 <div class="sidebar">
     <h2>Skills</h2>
 
-    <div class="skill"><div class="skill-name">HTML</div><div class="bar"><div class="fill html"></div></div></div>
-    <div class="skill"><div class="skill-name">CSS</div><div class="bar"><div class="fill css"></div></div></div>
-    <div class="skill"><div class="skill-name">SQL</div><div class="bar"><div class="fill sql"></div></div></div>
-    <div class="skill"><div class="skill-name">PHP</div><div class="bar"><div class="fill php"></div></div></div>
-    <div class="skill"><div class="skill-name">JavaScript</div><div class="bar"><div class="fill js"></div></div></div>
+    <div class="skill"><div>HTML</div><div class="bar"><div class="fill html"></div></div></div>
+    <div class="skill"><div>CSS</div><div class="bar"><div class="fill css"></div></div></div>
+    <div class="skill"><div>SQL</div><div class="bar"><div class="fill sql"></div></div></div>
+    <div class="skill"><div>PHP</div><div class="bar"><div class="fill php"></div></div></div>
+    <div class="skill"><div>JavaScript</div><div class="bar"><div class="fill js"></div></div></div>
 </div>
 
 </div>
@@ -280,18 +285,13 @@ function sendEmail(event) {
 
     emailjs.send("service_mxuwgsz", "template_8eabruh", params)
     .then(() => {
-
         let popup = document.getElementById("popup");
         popup.style.display = "block";
-
-        setTimeout(() => {
-            popup.style.display = "none";
-        }, 3000);
-
+        setTimeout(() => popup.style.display = "none", 3000);
         document.querySelector("form").reset();
-
-    }, () => {
-        alert("Failed to send message.");
+    }, (error) => {
+        console.log(error);
+        alert("Failed to send message");
     });
 }
 </script>
