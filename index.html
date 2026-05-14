@@ -3,298 +3,941 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Musa Titus Portfolio</title>
-
+<title>Musa Titus - Developer</title>
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-<script>
-   emailjs.init("qFoU4qUDC8vZYtsSX");
-</script>
+<script>emailjs.init("qFoU4qUDC8vZYtsSX");</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
 
 <style>
-    body {
-        margin: 0;
-        font-family: Arial, Helvetica, sans-serif;
-        background-color: darkolivegreen;
-        color: white;
-        line-height: 1.6;
-    }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    .layout {
-        display: flex;
-        min-height: 100vh;
-    }
+  :root {
+    --bg: #0a0a08;
+    --bg2: #111110;
+    --bg3: #1a1a17;
+    --line: #2a2a26;
+    --accent: #c4b0f5;
+    --accent2: #e2d8f8;
+    --text: #e8e6df;
+    --muted: #6b6b62;
+    --font-display: 'DM Serif Display', serif;
+    --font-body: 'Syne', sans-serif;
+    --font-mono: 'DM Mono', monospace;
+  }
 
-    .container {
-        flex: 1;
-        padding: 20px 40px;
-        max-width: 1000px;
-        margin: auto;
-    }
+  html { scroll-behavior: smooth; }
 
-    .sidebar {
-        width: 260px;
-        background: #556b2f;
-        padding: 20px;
-        border-left: 2px solid palegreen;
-        position: sticky;
-        top: 0;
-        height: 100vh;
-    }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
 
-    .sidebar h2 {
-        border-bottom: 2px solid palegreen;
-        padding-bottom: 5px;
-    }
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.2rem 4rem;
+    border-bottom: 1px solid var(--line);
+    background: rgba(10,10,8,0.92);
+    backdrop-filter: blur(12px);
+  }
 
-    .skill { margin: 15px 0; }
-    .bar {
-        width: 100%;
-        height: 10px;
-        background: #2f3e1f;
-        border-radius: 5px;
-        overflow: hidden;
-    }
+  .nav-logo {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    letter-spacing: 0.15em;
+    color: var(--accent);
+    text-transform: uppercase;
+  }
 
-    .fill { height: 100%; background: palegreen; }
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+  }
 
-    .html { width: 100%; }
-    .css { width: 100%; }
-    .sql { width: 100%; }
-    .php { width: 70%; }
-    .js { width: 70%; }
+  .nav-links a {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
 
-    .header { text-align: center; }
+  .nav-links a:hover { color: var(--text); }
 
-    .profile-img {
-        width: 340px;
-        height: 471px;
-        object-fit: cover;
-        border-radius: 10px;
-        border: 3px solid palegreen;
-    }
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-bottom: 1px solid var(--line);
+    padding-top: 72px;
+  }
 
-    h1 { margin-top: 20px; font-size: 2.5em; }
+  .hero-left {
+    padding: 6rem 4rem 4rem;
+    border-right: 1px solid var(--line);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
 
-    .bio {
-        max-width: 600px;
-        margin: 15px auto;
-        color: #cbd5f5;
-    }
+  .hero-tag {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 2rem;
+  }
 
-    section { margin-top: 50px; }
+  .hero-name {
+    font-family: var(--font-display);
+    font-size: clamp(3.5rem, 6vw, 6rem);
+    line-height: 1;
+    margin-bottom: 1rem;
+    color: var(--text);
+  }
 
-    h2 {
-        border-bottom: 2px solid palegreen;
-        padding-bottom: 5px;
-        margin-bottom: 20px;
-    }
+  .hero-name em {
+    font-style: italic;
+    color: var(--accent2);
+  }
 
-    .project {
-        background: olivedrab;
-        padding: 15px;
-        border-radius: 10px;
-        margin-bottom: 15px;
-    }
+  .hero-title {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+    margin-bottom: 2.5rem;
+  }
 
-    .project a {
-        color: palegreen;
-        text-decoration: none;
-    }
+  .hero-bio {
+    font-size: 16px;
+    line-height: 1.8;
+    color: var(--muted);
+    max-width: 480px;
+    margin-bottom: 3rem;
+  }
 
-    .contact-form {
-        background: #556b2f;
-        padding: 20px;
-        border-radius: 10px;
-        position: relative;
-    }
+  .hero-cta {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
 
-    .contact-form input,
-    .contact-form textarea {
-        width: 100%;
-        padding: 10px;
-        margin: 8px 0;
-        border: none;
-        border-radius: 5px;
-    }
+  .btn-primary {
+    background: var(--accent);
+    color: #0a0a08;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 14px 28px;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    font-weight: 500;
+    transition: background 0.2s, transform 0.15s;
+    display: inline-block;
+  }
 
-    .contact-form button {
-        background: palegreen;
-        color: black;
-        padding: 10px;
-        border: none;
-        width: 100%;
-        font-weight: bold;
-        border-radius: 5px;
-        cursor: pointer;
-    }
+  .btn-primary:hover { background: #d5c8f9; transform: translateY(-1px); }
 
-    #popup {
-        display: none;
-        position: absolute;
-        top: -50px;
-        left: 50%;
-        transform: translateX(-50%);
-        background: palegreen;
-        color: black;
-        padding: 10px 15px;
-        border-radius: 8px;
-        font-weight: bold;
-    }
+  .btn-ghost {
+    background: transparent;
+    color: var(--text);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 13px 28px;
+    border: 1px solid var(--line);
+    cursor: pointer;
+    text-decoration: none;
+    transition: border-color 0.2s, color 0.2s;
+    display: inline-block;
+  }
 
-    footer {
-        text-align: center;
-        margin-top: 40px;
-        font-size: 0.9em;
-        color: #94a3b8;
-    }
+  .btn-ghost:hover { border-color: var(--muted); }
 
-    @media (max-width: 900px) {
-        .layout { flex-direction: column; }
-        .sidebar {
-            width: 100%;
-            height: auto;
-            position: relative;
-        }
-        .profile-img {
-            width: 90%;
-            height: auto;
-        }
-    }
+  .hero-right {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: stretch;
+  }
+
+  .hero-img-wrap {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding: 4rem 3rem 0;
+    background: var(--bg2);
+  }
+
+  .hero-img-wrap::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 50% 0%, rgba(196,176,245,0.08) 0%, transparent 60%);
+  }
+
+  .hero-img {
+    width: 100%;
+    max-width: 380px;
+    height: auto;
+    object-fit: cover;
+    display: block;
+    filter: grayscale(15%);
+    mix-blend-mode: luminosity;
+    opacity: 0.9;
+  }
+
+  .hero-img-overlay {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 40%;
+    background: linear-gradient(to top, var(--bg2), transparent);
+  }
+
+  .hero-scroll {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .scroll-line {
+    width: 1px;
+    height: 48px;
+    background: linear-gradient(to bottom, var(--line), var(--accent));
+    animation: scrollDown 2s ease-in-out infinite;
+  }
+
+  @keyframes scrollDown {
+    0%, 100% { opacity: 0.3; transform: scaleY(1); }
+    50% { opacity: 1; transform: scaleY(1.2); }
+  }
+
+  /* STATS BAR */
+  .stats-bar {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border-bottom: 1px solid var(--line);
+    background: var(--bg2);
+  }
+
+  .stat {
+    padding: 2rem;
+    border-right: 1px solid var(--line);
+    text-align: center;
+  }
+
+  .stat:last-child { border-right: none; }
+
+  .stat-num {
+    font-family: var(--font-display);
+    font-size: 2.2rem;
+    color: var(--accent);
+    display: block;
+    line-height: 1;
+    margin-bottom: 0.4rem;
+  }
+
+  .stat-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* SECTIONS */
+  section {
+    border-bottom: 1px solid var(--line);
+  }
+
+  .section-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 6rem 4rem;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 1.5rem;
+    margin-bottom: 4rem;
+  }
+
+  .section-num {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 0.15em;
+  }
+
+  .section-title {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 4vw, 3rem);
+    color: var(--text);
+    line-height: 1.1;
+  }
+
+  .section-line {
+    flex: 1;
+    height: 1px;
+    background: var(--line);
+    margin-left: 1rem;
+  }
+
+  /* SKILLS */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+  }
+
+  .skill-item {
+    padding: 2rem;
+    border-bottom: 1px solid var(--line);
+    border-right: 1px solid var(--line);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    transition: background 0.2s;
+  }
+
+  .skill-item:nth-child(even) { border-right: none; }
+  .skill-item:nth-last-child(-n+2) { border-bottom: none; }
+  .skill-item:hover { background: var(--bg2); }
+
+  .skill-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+
+  .skill-name {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    letter-spacing: 0.08em;
+    color: var(--text);
+  }
+
+  .skill-pct {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--accent);
+  }
+
+  .skill-bar-bg {
+    height: 2px;
+    background: var(--line);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .skill-bar-fill {
+    position: absolute;
+    top: 0; left: 0; height: 100%;
+    background: var(--accent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .skill-bar-fill.animated { transform: scaleX(1); }
+
+  .skill-desc {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  /* PROJECTS */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    border: 1px solid var(--line);
+  }
+
+  .project-card {
+    padding: 2.5rem;
+    border-bottom: 1px solid var(--line);
+    border-right: 1px solid var(--line);
+    position: relative;
+    transition: background 0.2s;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+  }
+
+  .project-card:hover { background: var(--bg2); }
+
+  .project-card:nth-child(even) { border-right: none; }
+  .project-card:nth-last-child(-n+2) { border-bottom: none; }
+
+  .project-card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1.5rem;
+  }
+
+  .project-num {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    color: var(--muted);
+  }
+
+  .project-arrow {
+    font-size: 20px;
+    color: var(--line);
+    transition: color 0.2s, transform 0.2s;
+    line-height: 1;
+  }
+
+  .project-card:hover .project-arrow {
+    color: var(--accent);
+    transform: translate(3px, -3px);
+  }
+
+  .project-title {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    color: var(--text);
+    margin-bottom: 0.75rem;
+    line-height: 1.2;
+  }
+
+  .project-desc {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+  }
+
+  .project-tags {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .tag {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border: 1px solid var(--line);
+    color: var(--muted);
+    transition: border-color 0.2s, color 0.2s;
+  }
+
+  .project-card:hover .tag { border-color: var(--accent); color: var(--accent); }
+
+  /* CONTACT */
+  .contact-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
+    align-items: start;
+  }
+
+  .contact-info h3 {
+    font-family: var(--font-display);
+    font-size: 1.6rem;
+    color: var(--text);
+    margin-bottom: 1rem;
+    line-height: 1.3;
+  }
+
+  .contact-info p {
+    font-size: 15px;
+    color: var(--muted);
+    line-height: 1.8;
+    margin-bottom: 2.5rem;
+  }
+
+  .contact-detail {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .contact-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    text-decoration: none;
+    color: var(--muted);
+    font-family: var(--font-mono);
+    font-size: 13px;
+    letter-spacing: 0.05em;
+    transition: color 0.2s;
+    padding: 1rem;
+    border: 1px solid var(--line);
+  }
+
+  .contact-item:hover { color: var(--accent); border-color: var(--accent); }
+
+  .contact-icon {
+    font-size: 18px;
+    color: var(--accent);
+    flex-shrink: 0;
+  }
+
+  /* FORM */
+  .form-group {
+    margin-bottom: 1.5rem;
+  }
+
+  .form-label {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.6rem;
+  }
+
+  .form-input {
+    width: 100%;
+    background: var(--bg2);
+    border: 1px solid var(--line);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 15px;
+    padding: 14px 16px;
+    outline: none;
+    transition: border-color 0.2s;
+    display: block;
+  }
+
+  .form-input:focus { border-color: var(--accent); }
+  .form-input::placeholder { color: var(--muted); }
+
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+  textarea.form-input { resize: vertical; min-height: 140px; }
+
+  .form-submit {
+    background: var(--accent);
+    color: #0a0a08;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 16px 32px;
+    border: none;
+    cursor: pointer;
+    font-weight: 500;
+    width: 100%;
+    margin-top: 0.5rem;
+    transition: background 0.2s, transform 0.15s;
+  }
+
+  .form-submit:hover { background: #d5c8f9; transform: translateY(-1px); }
+
+  .form-feedback {
+    display: none;
+    background: rgba(200,240,96,0.1);
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    padding: 14px 16px;
+    margin-top: 1rem;
+    text-align: center;
+  }
+
+  /* FOOTER */
+  footer {
+    padding: 2rem 4rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--bg);
+  }
+
+  .footer-copy {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+  }
+
+  .footer-mono {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+  }
+
+  /* ANIMATIONS */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+  /* MOBILE */
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    .hero { grid-template-columns: 1fr; }
+    .hero-left { padding: 5rem 1.5rem 3rem; }
+    .hero-right { min-height: 50vw; }
+    .stats-bar { grid-template-columns: 1fr 1fr; }
+    .stat:nth-child(2) { border-right: none; }
+    .section-inner { padding: 4rem 1.5rem; }
+    .skills-grid { grid-template-columns: 1fr; }
+    .skill-item:nth-child(even) { border-right: 1px solid var(--line); }
+    .skill-item:nth-last-child(-n+2) { border-bottom: 1px solid var(--line); }
+    .skill-item:last-child { border-bottom: none; }
+    .projects-grid { grid-template-columns: 1fr; }
+    .project-card:nth-child(even) { border-right: none; }
+    .project-card:nth-last-child(-n+2) { border-bottom: 1px solid var(--line); }
+    .project-card:last-child { border-bottom: none; }
+    .contact-layout { grid-template-columns: 1fr; gap: 3rem; }
+    .form-row { grid-template-columns: 1fr; }
+    footer { flex-direction: column; gap: 0.5rem; text-align: center; }
+  }
 </style>
 </head>
-
 <body>
 
-<div class="layout">
+<nav>
+  <span class="nav-logo">MT / Dev</span>
+  <ul class="nav-links">
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
 
-<div class="container">
-
-    <div class="header">
-        <img src="Picture.png" class="profile-img">
-        <h1>MUSA TITUS</h1>
-        <p class="bio">
-            Rhodes University graduate, majored in Information Systems. Passionate about coding, 
-            web development, and building clean, efficient, and user-friendly systems. 
-            I enjoy solving problems through technology and continuously improving my technical skills.
-        </p>
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-left fade-up">
+    <p class="hero-tag">Rhodes University · BA Information Systems</p>
+    <div style="display:flex; align-items:center; gap: 1.5rem; margin-bottom: 1rem;">
+      <img src="Picture.png" alt="Musa Titus" style="width:72px; height:72px; border-radius:50%; object-fit:cover; border:2px solid var(--accent); flex-shrink:0; filter:grayscale(10%);">
+      <h1 class="hero-name" style="margin-bottom:0;">Musa<br><em>Titus</em></h1>
     </div>
+    <p class="hero-title">Full-Stack Developer &amp; Systems Builder</p>
+    <p class="hero-bio">
+      Passionate about crafting clean, efficient, and user-centric systems. 
+      I turn complex problems into elegant digital solutions, from database-backed 
+      platforms to polished web experiences.
+    </p>
+    <div class="hero-cta">
+      <a href="#projects" class="btn-primary">View Work</a>
+      <a href="#contact" class="btn-ghost">Get in Touch</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-img-wrap">
+      <img src="Picture.png" class="hero-img" alt="Musa Titus">
+      <div class="hero-img-overlay"></div>
+    </div>
+    <div class="hero-scroll">
+      <div class="scroll-line"></div>
+      <span>Scroll</span>
+    </div>
+  </div>
+</div>
 
-    <section>
-        <h2>Projects</h2>
+<!-- STATS -->
+<div class="stats-bar">
+  <div class="stat fade-up">
+    <span class="stat-num">5+</span>
+    <span class="stat-label">Live Projects</span>
+  </div>
+  <div class="stat fade-up">
+    <span class="stat-num">6</span>
+    <span class="stat-label">Languages</span>
+  </div>
+  <div class="stat fade-up">
+    <span class="stat-num">3</span>
+    <span class="stat-label">Years Coding</span>
+  </div>
+  <div class="stat fade-up">
+    <span class="stat-num">BA</span>
+    <span class="stat-label">Info Systems</span>
+  </div>
+</div>
 
-        <div class="project">
-            <h3>NovaTech Website</h3>
-            <p>
-                Modern, responsive business landing page for a fictional tech company (NovaTech) <br>
-                using HTML, CSS, and JavaScript.
-            </p>
-            <a href="NovaTech-home.html">View Project</a>
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-inner">
+    <div class="section-header fade-up">
+      <span class="section-num">01</span>
+      <h2 class="section-title">Technical Skills</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="skills-grid">
+      <div class="skill-item fade-up">
+        <div class="skill-top">
+          <span class="skill-name">HTML5</span>
+          <span class="skill-pct">100%</span>
         </div>
-
-        <div class="project">
-            <h3>Rock Paper Scissors Game</h3>
-            <p>
-                Interactive browser-based game built using JavaScript, HTML, and CSS. 
-                Features dynamic UI updates and real-time user interaction.
-            </p>
-            <a href="rock-paper-scissors.html">View Project</a>
+        <div class="skill-bar-bg"><div class="skill-bar-fill" style="--w:1"></div></div>
+        <p class="skill-desc">Semantic markup, accessibility standards, and structured document architecture.</p>
+      </div>
+      <div class="skill-item fade-up">
+        <div class="skill-top">
+          <span class="skill-name">CSS3</span>
+          <span class="skill-pct">100%</span>
         </div>
-
-        <div class="project">
-            <h3>Makhanda SPCA Management System</h3>
-            <p>
-                Web-based system developed using PHP and MySQL with full CRUD functionality. 
-                Designed to support organisational operations and data management.
-            </p>
-            <a href="#">View Project</a>
+        <div class="skill-bar-bg"><div class="skill-bar-fill" style="--w:1"></div></div>
+        <p class="skill-desc">Responsive layouts, animations, Flexbox & Grid systems.</p>
+      </div>
+      <div class="skill-item fade-up">
+        <div class="skill-top">
+          <span class="skill-name">SQL</span>
+          <span class="skill-pct">100%</span>
         </div>
-
-        <div class="project">
-            <h3>Web-Based Calculator</h3>
-            <p>
-                Responsive calculator application with structured logic and input validation, 
-                ensuring accurate calculations and a smooth user experience.
-            </p>
-            <a href="calculator.html">View Project</a>
+        <div class="skill-bar-bg"><div class="skill-bar-fill" style="--w:1"></div></div>
+        <p class="skill-desc">Relational database design, complex queries, and data management.</p>
+      </div>
+      <div class="skill-item fade-up">
+        <div class="skill-top">
+          <span class="skill-name">PHP</span>
+          <span class="skill-pct">70%</span>
         </div>
-
-        <div class="project">
-            <h3>Contact Book System</h3>
-            <p>
-                A contact management system allowing users to add, edit, and delete contacts, 
-                demonstrating CRUD operations and data handling.
-            </p>
-            <a href="contact-book.html">View Project</a>
+        <div class="skill-bar-bg"><div class="skill-bar-fill" style="--w:0.7"></div></div>
+        <p class="skill-desc">Server-side logic, CRUD operations, and MySQL integration.</p>
+      </div>
+      <div class="skill-item fade-up">
+        <div class="skill-top">
+          <span class="skill-name">JavaScript</span>
+          <span class="skill-pct">70%</span>
         </div>
-
-    </section>
-
-    <section>
-        <h2>Contact Me</h2>
-
-        <div class="contact-form">
-            <div id="popup">Message sent successfully ✔</div>
-
-            <form onsubmit="sendEmail(event)">
-                <input type="text" id="name" placeholder="Name" required>
-                <input type="text" id="surname" placeholder="Surname" required>
-                <input type="email" id="email" placeholder="Email Address" required>
-                <textarea id="message" rows="5" placeholder="Your message..." required></textarea>
-                <button type="submit">Send Message</button>
-            </form>
+        <div class="skill-bar-bg"><div class="skill-bar-fill" style="--w:0.7"></div></div>
+        <p class="skill-desc">DOM manipulation, event-driven programming, and interactive UI logic.</p>
+      </div>
+      <div class="skill-item fade-up">
+        <div class="skill-top">
+          <span class="skill-name">C#</span>
+          <span class="skill-pct">Basic</span>
         </div>
-
-        <p style="margin-top:20px;">
-            📧 musatitus001@gmail.com<br>
-            📞 +27 78 336 8059
+        <div class="skill-bar-bg"><div class="skill-bar-fill" style="--w:0.35"></div></div>
+        <p class="skill-desc">Object-oriented fundamentals, console applications, and .NET basics.</p>
+      </div>
+      <div class="skill-item fade-up" style="grid-column: 1 / -1; border-right: none; display: flex; flex-direction: column; justify-content: center; align-items: flex-start; gap: 0.5rem;">
+        <p style="font-family: var(--font-display); font-size: 1.1rem; color: var(--accent2); font-style: italic; line-height: 1.4;">
+          "Clean code is not written by following a set of rules. Clean code is written by someone who cares".
         </p>
-    </section>
+        <span style="font-family: var(--font-mono); font-size: 11px; color: var(--muted); letter-spacing: 0.1em;">— Robert C. Martin</span>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <footer>
-        © 2026 Musa Titus | Portfolio
-    </footer>
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-inner">
+    <div class="section-header fade-up">
+      <span class="section-num">02</span>
+      <h2 class="section-title">Selected Work</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="projects-grid">
 
-</div>
+      <a href="NovaTech-home.html" class="project-card fade-up">
+        <div class="project-card-top">
+          <span class="project-num">001</span>
+          <span class="project-arrow">↗</span>
+        </div>
+        <h3 class="project-title">NovaTech Website</h3>
+        <p class="project-desc">Modern, responsive business landing page for a fictional tech company. Demonstrates layout architecture, component design, and cross-browser compatibility.</p>
+        <div class="project-tags">
+          <span class="tag">HTML</span>
+          <span class="tag">CSS</span>
+          <span class="tag">JavaScript</span>
+        </div>
+      </a>
 
-<div class="sidebar">
-    <h2>Skills</h2>
+      <a href="rock-paper-scissors.html" class="project-card fade-up">
+        <div class="project-card-top">
+          <span class="project-num">002</span>
+          <span class="project-arrow">↗</span>
+        </div>
+        <h3 class="project-title">Rock Paper Scissors</h3>
+        <p class="project-desc">Interactive browser game with dynamic UI state management, real-time feedback, and score tracking. Built for performance and smooth user experience.</p>
+        <div class="project-tags">
+          <span class="tag">JavaScript</span>
+          <span class="tag">HTML</span>
+          <span class="tag">CSS</span>
+        </div>
+      </a>
 
-    <div class="skill"><div>HTML</div><div class="bar"><div class="fill html"></div></div></div>
-    <div class="skill"><div>CSS</div><div class="bar"><div class="fill css"></div></div></div>
-    <div class="skill"><div>SQL</div><div class="bar"><div class="fill sql"></div></div></div>
-    <div class="skill"><div>PHP</div><div class="bar"><div class="fill php"></div></div></div>
-    <div class="skill"><div>JavaScript</div><div class="bar"><div class="fill js"></div></div></div>
-</div>
+      <a href="calculator.html" class="project-card fade-up">
+        <div class="project-card-top">
+          <span class="project-num">004</span>
+          <span class="project-arrow">↗</span>
+        </div>
+        <h3 class="project-title">Web Calculator</h3>
+        <p class="project-desc">Responsive calculator with structured computational logic, input validation, and edge-case handling ensuring reliable, accurate results across all inputs.</p>
+        <div class="project-tags">
+          <span class="tag">JavaScript</span>
+          <span class="tag">HTML</span>
+          <span class="tag">CSS</span>
+        </div>
+      </a>
 
-</div>
+      <a href="contact-book.html" class="project-card fade-up" style="grid-column: 1 / -1; border-right: none;">
+        <div class="project-card-top">
+          <span class="project-num">005</span>
+          <span class="project-arrow">↗</span>
+        </div>
+        <h3 class="project-title">Contact Book System</h3>
+        <p class="project-desc">Contact management application demonstrating full CRUD data operations - create, read, update, and delete — with clean data handling patterns and validation.</p>
+        <div class="project-tags">
+          <span class="tag">HTML</span>
+          <span class="tag">CSS</span>
+          <span class="tag">JavaScript</span>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-inner">
+    <div class="section-header fade-up">
+      <span class="section-num">03</span>
+      <h2 class="section-title">Get in Touch</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="contact-layout">
+
+      <div class="contact-info fade-up">
+        <h3>Open to opportunities.<br>Let's build something.</h3>
+        <p>Whether you have a role in mind, a project to discuss, or just want to connect - my inbox is always open. I respond within 24 hours.</p>
+        <div class="contact-detail">
+          <a href="mailto:musatitus001@gmail.com" class="contact-item">
+            <span class="contact-icon">✉</span>
+            musatitus001@gmail.com
+          </a>
+          <a href="tel:+27783368059" class="contact-item">
+            <span class="contact-icon">✆</span>
+            +27 78 336 8059
+          </a>
+        </div>
+      </div>
+
+      <div class="fade-up">
+        <form onsubmit="sendEmail(event)">
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">First Name</label>
+              <input type="text" id="name" class="form-input" placeholder="Alex" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Last Name</label>
+              <input type="text" id="surname" class="form-input" placeholder="Johnson" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Email Address</label>
+            <input type="email" id="email" class="form-input" placeholder="alex@company.com" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Message</label>
+            <textarea id="message" class="form-input" placeholder="Tell me about your project or opportunity..." required></textarea>
+          </div>
+          <button type="submit" class="form-submit">Send Message →</button>
+          <div id="popup" class="form-feedback">Message sent - I'll be in touch soon.</div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span class="footer-copy">© 2026 Musa Titus</span>
+  <span class="footer-mono">Rhodes University · BA Information Systems</span>
+</footer>
 
 <script>
 function sendEmail(event) {
-    event.preventDefault();
-
-    let name = document.getElementById("name").value;
-    let surname = document.getElementById("surname").value;
-    let email = document.getElementById("email").value;
-    let message = document.getElementById("message").value;
-
-    let params = {
-        from_name: name + " " + surname,
-        from_email: email,
-        message: message
-    };
-
-    emailjs.send("service_mxuwgsz", "template_8eabruh", params)
-    .then(() => {
-        let popup = document.getElementById("popup");
-        popup.style.display = "block";
-        setTimeout(() => popup.style.display = "none", 3000);
-        document.querySelector("form").reset();
-    }, (error) => {
-        console.log(error);
-        alert("Failed to send message");
-    });
+  event.preventDefault();
+  const params = {
+    from_name: document.getElementById("name").value + " " + document.getElementById("surname").value,
+    from_email: document.getElementById("email").value,
+    message: document.getElementById("message").value
+  };
+  emailjs.send("service_mxuwgsz", "template_8eabruh", params).then(() => {
+    const popup = document.getElementById("popup");
+    popup.style.display = "block";
+    setTimeout(() => popup.style.display = "none", 4000);
+    event.target.reset();
+  }, () => alert("Failed to send. Please try emailing directly."));
 }
-</script>
 
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add("visible"), i * 80);
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll(".fade-up").forEach(el => observer.observe(el));
+
+const skillFills = document.querySelectorAll(".skill-bar-fill");
+const skillObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      const fill = e.target;
+      const w = fill.style.getPropertyValue("--w") || "1";
+      fill.style.width = (parseFloat(w) * 100) + "%";
+      fill.classList.add("animated");
+    }
+  });
+}, { threshold: 0.5 });
+
+skillFills.forEach(f => {
+  const w = f.style.getPropertyValue("--w") || "1";
+  f.style.width = "0%";
+  skillObserver.observe(f);
+});
+</script>
 </body>
 </html>
